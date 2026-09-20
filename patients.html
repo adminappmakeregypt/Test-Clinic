@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClinicManagement - ملفات المرضى</title>
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header class="page-header app-header">
+      <div class="brand">
+        <img src="logo.jpg" alt="ClinicManagement Logo" class="brand-logo" />
+        <div class="brand-text">
+          <h1>ملفات المرضى</h1>
+          <p class="brand-tagline">بحث وعرض السجل الكامل للمريض</p>
+        </div>
+      </div>
+      <nav aria-label="القائمة الرئيسية" style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+        <a class="btn ghost" href="home.html">🏠 الرئيسية</a>
+        <a class="btn ghost" href="index.html">📋 الحجز</a>
+        <a class="btn ghost" href="reports.html">📊 التقارير</a>
+        <a class="btn primary" href="patients.html" aria-current="page">🗂️ ملفات المرضى</a>
+        <a class="btn ghost" href="admin.html">⚙️ المدير</a>
+        <a class="btn ghost" href="User_Guide.pdf" target="_blank" rel="noopener">📖 دليل المستخدم</a>
+      </nav>
+    </header>
+
+    <section class="card">
+      <h2>بحث عن مريض</h2>
+      <div class="grid-2">
+        <div class="field">
+          <label>اسم المريض</label>
+          <input type="search" id="searchName" placeholder="اكتب جزءاً من الاسم" />
+        </div>
+        <div class="field">
+          <label>رقم الجوال</label>
+          <input type="search" id="searchPhone" placeholder="مثال: 010xxxxxxxx" />
+        </div>
+        <div class="field">
+          <label>من تاريخ</label>
+          <input type="date" id="searchDateFrom" />
+        </div>
+        <div class="field">
+          <label>إلى تاريخ</label>
+          <input type="date" id="searchDateTo" />
+        </div>
+      </div>
+      <div class="actions" style="margin-top:12px;">
+        <button class="btn primary" id="searchBtn" type="button">🔍 بحث</button>
+        <button class="btn ghost" id="clearBtn" type="button">مسح</button>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:14px;">
+      <h2>نتائج البحث — المرضى</h2>
+      <div class="table-wrap">
+        <table id="patientsTable">
+          <thead>
+            <tr>
+              <th>الاسم</th>
+              <th>الجوال</th>
+              <th>رقم الهوية</th>
+              <th>تاريخ الميلاد</th>
+              <th>الجنس</th>
+              <th>عدد الزيارات</th>
+              <th>آخر زيارة</th>
+              <th>إجراء</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <p class="empty" id="emptyPatients">لا توجد نتائج.</p>
+      </div>
+    </section>
+
+    <section class="card" id="patientDetailCard" style="margin-top:14px; display:none;">
+      <div class="bookings-header">
+        <h2>سجل المريض: <span id="pdName"></span></h2>
+        <button class="btn ghost" id="closeDetailBtn" type="button">✖ إغلاق</button>
+      </div>
+      <div class="grid-2" style="margin-top:8px;">
+        <div><strong>الجوال:</strong> <span id="pdPhone">-</span></div>
+        <div><strong>رقم الهوية:</strong> <span id="pdId">-</span></div>
+        <div><strong>تاريخ الميلاد:</strong> <span id="pdBirth">-</span></div>
+        <div><strong>الجنس:</strong> <span id="pdGender">-</span></div>
+        <div><strong>البريد الإلكتروني:</strong> <span id="pdEmail">-</span></div>
+        <div><strong>إجمالي الزيارات:</strong> <span id="pdCount">0</span></div>
+      </div>
+
+      <h3 style="margin-top:16px;">كل الزيارات</h3>
+      <div class="table-wrap">
+        <table id="visitsTable">
+          <thead>
+            <tr>
+              <th>التاريخ</th>
+              <th>الوقت</th>
+              <th>الطبيب</th>
+              <th>التخصص</th>
+              <th>الحالة / الشكوى</th>
+              <th>الدفع</th>
+              <th>المبلغ</th>
+              <th>الحالة</th>
+              <th>ملاحظات</th>
+              <th>الروشتة</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <h3 style="margin-top:18px;">💊 الروشتات</h3>
+      <div class="table-wrap">
+        <table id="rxTable">
+          <thead>
+            <tr>
+              <th>رقم الروشتة</th>
+              <th>تاريخ الإصدار</th>
+              <th>تاريخ الزيارة</th>
+              <th>الطبيب</th>
+              <th>عدد الأدوية</th>
+              <th>إجراء</th>
+            </tr>
+          </thead>
+          <tbody id="rxListBody"></tbody>
+        </table>
+        <p class="empty" id="rxEmpty">لا توجد روشتات لهذا المريض.</p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    window.__BMD_LAST_CLINIC_KEY = "bmd::lastClinicId";
+    window.CLINIC_ID = localStorage.getItem(window.__BMD_LAST_CLINIC_KEY) || "__anon__";
+    window.clinicKey = function (name) { return "bmd::" + window.CLINIC_ID + "::" + name; };
+  </script>
+  <script src="specialties.js?v=2"></script>
+  <script src="dental.js?v=1"></script>
+  <script src="ophthalmology.js?v=1"></script>
+  <script src="pediatrics.js?v=1"></script>
+  <script src="dermatology.js?v=1"></script>
+  <script type="module" src="attachments.js?v=1"></script>
+  <script type="module" src="auth.js?v=17"></script>
+  <script type="module" src="cloud-sync.js?v=2"></script>
+  <script type="module" src="prescriptions.js?v=2"></script>
+  <script defer src="patients.js?v=2"></script>
+</body>
+</html>
