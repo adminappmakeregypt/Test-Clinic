@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClinicManagement - الرئيسية</title>
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="home-page">
+  <div class="container">
+
+    <!-- Hero card -->
+    <section class="hero-card page-header">
+      <div class="hero-logo">
+        <img src="logo.jpg" alt="App Maker" />
+      </div>
+      <div class="hero-text">
+        <p class="hero-welcome">مرحباً بك في</p>
+        <h1 class="hero-title">ClinicManagement</h1>
+        <span class="hero-accent"></span>
+        <p class="hero-tagline">منصة متكاملة لإدارة العيادات والأطباء</p>
+      </div>
+      <div class="hero-illustration" aria-hidden="true">
+        <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
+          <!-- clouds -->
+          <ellipse cx="40" cy="30" rx="22" ry="8" fill="#e8ecff"/>
+          <ellipse cx="70" cy="24" rx="16" ry="6" fill="#e8ecff"/>
+          <ellipse cx="200" cy="28" rx="20" ry="7" fill="#e8ecff"/>
+          <!-- trees -->
+          <circle cx="30" cy="150" r="14" fill="#86efac"/>
+          <rect x="27" y="150" width="6" height="14" fill="#6b7280"/>
+          <circle cx="215" cy="150" r="14" fill="#86efac"/>
+          <rect x="212" y="150" width="6" height="14" fill="#6b7280"/>
+          <circle cx="55" cy="155" r="9" fill="#a7f3d0"/>
+          <!-- building -->
+          <rect x="85" y="55" width="90" height="110" rx="6" fill="#8b7cf6"/>
+          <rect x="85" y="55" width="90" height="14" rx="6" fill="#7c6ff0"/>
+          <!-- roof cross -->
+          <rect x="123" y="40" width="14" height="22" fill="#ffffff"/>
+          <rect x="117" y="46" width="26" height="10" fill="#ffffff"/>
+          <!-- windows -->
+          <rect x="95" y="80" width="16" height="16" rx="2" fill="#e0e7ff"/>
+          <rect x="119" y="80" width="16" height="16" rx="2" fill="#e0e7ff"/>
+          <rect x="143" y="80" width="16" height="16" rx="2" fill="#e0e7ff"/>
+          <rect x="95" y="104" width="16" height="16" rx="2" fill="#e0e7ff"/>
+          <rect x="143" y="104" width="16" height="16" rx="2" fill="#e0e7ff"/>
+          <!-- door -->
+          <rect x="119" y="128" width="22" height="37" rx="3" fill="#4b3fa8"/>
+          <circle cx="136" cy="147" r="1.5" fill="#fbbf24"/>
+          <!-- ground -->
+          <rect x="0" y="165" width="240" height="15" fill="#eef2ff"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Setup notice (admin, clinic not configured yet) -->
+    <section class="setup-banner" id="setupBanner" hidden>
+      <div class="setup-banner-icon">⚠️</div>
+      <div class="setup-banner-text">
+        من فضلك أضف التخصص و أسم الطبيب و مواعيد العمل من <strong>صفحة المدير</strong> أولاً
+      </div>
+      <a class="setup-banner-btn" href="admin.html">الانتقال إلى صفحة المدير ←</a>
+    </section>
+
+    <!-- User info bar -->
+    <section class="user-bar" id="userBar">
+      <!-- Populated by auth:ready -->
+    </section>
+
+    <!-- Feature cards -->
+    <section class="home-grid">
+      <a class="home-card tint-blue" href="User_Guide.pdf" target="_blank" rel="noopener">
+        <div class="home-icon">📖</div>
+        <h2>دليل المستخدم</h2>
+        <p>عرض دليل استخدام النظام بصيغة PDF</p>
+        <span class="home-cta">عرض الدليل <span class="arrow">←</span></span>
+      </a>
+
+      <a class="home-card tint-purple" href="admin.html">
+        <div class="home-icon">⚙️</div>
+        <h2>المدير</h2>
+        <p>إعدادات العيادة والأطباء وساعات العمل</p>
+        <span class="home-cta">إدارة الإعدادات <span class="arrow">←</span></span>
+      </a>
+
+      <a class="home-card tint-orange" href="patients.html">
+        <div class="home-icon">🗂️</div>
+        <h2>ملف الحجوزات</h2>
+        <p>البحث عن مريض وعرض كامل سجله وزياراته</p>
+        <span class="home-cta">استعراض الحجوزات <span class="arrow">←</span></span>
+      </a>
+
+      <a class="home-card tint-green" href="reports.html">
+        <div class="home-icon">📊</div>
+        <h2>التقارير</h2>
+        <p>عرض الإحصائيات والتقارير والتحليلات</p>
+        <span class="home-cta">عرض التقارير <span class="arrow">←</span></span>
+      </a>
+
+            <a class="home-card tint-teal" href="doctor.html">
+        <div class="home-icon">🩺</div>
+        <h2>صفحة الطبيب</h2>
+        <p>تسجيل زيارات المرضى حسب التخصص وعرض التاريخ المرضي</p>
+        <span class="home-cta">فتح صفحة الطبيب <span class="arrow">←</span></span>
+      </a>
+
+      <a class="home-card tint-pink" href="index.html">
+        <div class="home-icon">📅</div>
+        <h2>الحجز</h2>
+        <p>إدارة حجوزات المرضى وإضافة مواعيد جديدة</p>
+        <span class="home-cta">إدارة الحجوزات <span class="arrow">←</span></span>
+      </a>
+    </section>
+  </div>
+
+  <script src="specialties.js?v=4"></script>
+  <script type="module" src="auth.js?v=20"></script>
+  <script type="module" src="cloud-sync.js?v=3"></script>
+  <script>
+    document.addEventListener('auth:ready', (e) => {
+      const s = e.detail || {};
+      // Show the setup notice for admins while the clinic has no
+      // specialties / doctors / working hours configured yet.
+      const banner = document.getElementById('setupBanner');
+      if (banner) {
+        if (s.role === 'admin' && window.clinicKey) {
+          const majors = JSON.parse(localStorage.getItem(window.clinicKey('clinic_majors_v1')) || '[]');
+          const doctors = JSON.parse(localStorage.getItem(window.clinicKey('clinic_doctors_v1')) || '[]');
+          const hasHours = !!localStorage.getItem(window.clinicKey('clinic_admin_v1')) ||
+            doctors.some(d => d && d.schedule);
+          banner.hidden = !(majors.length === 0 || doctors.length === 0 || !hasHours);
+        } else {
+          banner.hidden = true;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
