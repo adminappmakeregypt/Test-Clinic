@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClinicManagement - لوحة المدير</title>
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    .doctor-chips { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:8px 0 16px; }
+    .doctor-chips .chip-label { font-weight:700; margin-left:8px; }
+    .doc-chip {
+      padding:8px 18px; border:2px solid #2b3a67; background:#fff; color:#2b3a67;
+      border-radius:8px; cursor:pointer; font-family:inherit; font-size:14px; font-weight:600;
+      transition:all .15s;
+    }
+    .doc-chip:hover { background:#eef2ff; }
+    .doc-chip.active { background:#2b3a67; color:#fff; }
+    .doc-chip .sched-dot { color:#10b981; margin-right:4px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="page-header app-header">
+      <div class="brand">
+        <img src="logo.jpg" alt="ClinicManagement Logo" class="brand-logo" />
+        <div class="brand-text">
+          <h1>ClinicManagement</h1>
+          <p class="brand-tagline">لوحة إدارة العيادة</p>
+        </div>
+      </div>
+      <nav aria-label="القائمة الرئيسية" style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+        <a class="btn ghost" href="home.html">🏠 الرئيسية</a>
+        <a class="btn ghost" href="index.html">📋 الحجز</a>
+        <a class="btn ghost" href="reports.html">📊 التقارير</a>
+        <a class="btn ghost" href="patients.html">🗂️ ملف الحجوزات</a>
+        <a class="btn ghost" href="doctor.html">🩺 صفحة الطبيب</a>
+        <a class="btn primary" href="admin.html" aria-current="page">⚙️ المدير</a>
+        <a class="btn ghost" href="User_Guide.pdf" target="_blank" rel="noopener">📖 دليل المستخدم</a>
+      </nav>
+    </header>
+    
+    <section class="card" style="margin-bottom:16px;">
+      <h2>🏥 تخصص العيادة</h2>
+      <p class="muted">اختر تخصص العيادة مرة واحدة. سيتم عرض حقول ومميزات هذا التخصص فقط للطبيب عند إنشاء الروشتة، وستظهر قائمة التخصص في صفحة الحجز تلقائياً.</p>
+      <div class="grid-2">
+        <div class="field">
+          <label>التخصص الأساسي للعيادة</label>
+          <select id="clinicSpecialty"></select>
+        </div>
+      </div>
+      <p class="muted" id="clinicSpecialtyHint"></p>
+    </section>
+
+
+    <section class="card admin-panel">
+      <h2>الأطباء والتخصصات</h2>
+      <p class="muted">أضف الأطباء وتخصصاتهم. ستظهر هذه القائمة في خطوات الحجز.</p>
+      <div class="grid-2">
+        <div class="field"><label>اسم الطبيب</label><input type="text" id="newDoctorName" placeholder="مثال: د. أحمد السالم" /></div>
+        <div class="field">
+          <label>التخصص</label>
+          <input type="text" id="newDoctorSpecialty" placeholder="تخصص العيادة" list="specialtySuggestions" />
+          <datalist id="specialtySuggestions"></datalist>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="addDoctorBtn" type="button">➕ إضافة طبيب</button>
+      </div>
+      <div class="table-wrap" style="margin-top:12px;">
+        <table id="doctorsTable">
+          <thead><tr><th>اسم الطبيب</th><th>التخصص</th><th>الجدول</th><th>إجراء</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <p class="empty" id="emptyDoctorsMsg">لا يوجد أطباء بعد.</p>
+      </div>
+
+      <hr style="margin:20px 0; border:none; border-top:1px dashed #ccc;" />
+
+      <h2>اختر طبيب لتعديل ساعات عمله</h2>
+      <div class="doctor-chips">
+        <span class="chip-label">اسم الطبيب:</span>
+        <div id="doctorChips" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+      </div>
+
+      <div id="docSchedSection" style="display:none;">
+        <h3 id="docSchedTitle" style="margin:8px 0;">إعدادات ساعات العمل</h3>
+        <p class="muted">حدد ساعات العمل ومدة كل موعد. ستظهر الفترات المتاحة تلقائياً للمستخدم مع استبعاد المواعيد المحجوزة.</p>
+        <div class="grid-2">
+          <div class="field"><label>بداية الدوام</label><input type="time" id="docSchedStart" value="09:00" /></div>
+          <div class="field"><label>نهاية الدوام</label><input type="time" id="docSchedEnd" value="17:00" /></div>
+          <div class="field"><label>بداية فترة الراحة (اختياري)</label><input type="time" id="docSchedBreakStart" /></div>
+          <div class="field"><label>نهاية فترة الراحة (اختياري)</label><input type="time" id="docSchedBreakEnd" /></div>
+          <div class="field">
+            <label>مدة الموعد الواحد (دقيقة)</label>
+            <select id="docSchedSlot">
+              <option value="15">15</option><option value="20">20</option>
+              <option value="30" selected>30</option><option value="45">45</option><option value="60">60</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>أيام العمل</label>
+            <div class="days-row" id="docSchedDays">
+              <label><input type="checkbox" value="0" /> الأحد</label>
+              <label><input type="checkbox" value="1" /> الإثنين</label>
+              <label><input type="checkbox" value="2" /> الثلاثاء</label>
+              <label><input type="checkbox" value="3" /> الأربعاء</label>
+              <label><input type="checkbox" value="4" /> الخميس</label>
+              <label><input type="checkbox" value="5" /> الجمعة</label>
+              <label><input type="checkbox" value="6" /> السبت</label>
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn success" id="saveDocSchedBtn" type="button">💾 حفظ الإعدادات</button>
+          <button class="btn ghost" id="clearDocSchedBtn" type="button">🗑️ إزالة الجدول المخصص</button>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+    window.__BMD_LAST_CLINIC_KEY = "bmd::lastClinicId";
+    window.CLINIC_ID = localStorage.getItem(window.__BMD_LAST_CLINIC_KEY) || "__anon__";
+    window.clinicKey = function (name) { return "bmd::" + window.CLINIC_ID + "::" + name; };
+  </script>
+  <script src="specialties.js?v=3"></script>
+  <script src="dental.js?v=2"></script>
+  <script src="ophthalmology.js?v=1"></script>
+  <script src="pediatrics.js?v=1"></script>
+  <script src="dermatology.js?v=1"></script>
+  <script type="module" src="auth.js?v=19"></script>
+  <script type="module" src="cloud-sync.js?v=3"></script>
+  <script defer src="admin.js?v=2"></script>
+</body>
+</html>
